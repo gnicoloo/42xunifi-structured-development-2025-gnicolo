@@ -1,0 +1,16 @@
+{
+    "configurations": [
+    {
+        "name": "(gdb) Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "/home/fzuccaro/Desktop/Structured_Programming/sd05/ex00/Library_Software",
+        "args": ["/home/fzuccaro/Desktop/Structured_Programming/sd05/ex00/Library.csv"],
+        "stopAtEntry": false,
+        "cwd": "${fileDirname}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+    }
+    ]
+}

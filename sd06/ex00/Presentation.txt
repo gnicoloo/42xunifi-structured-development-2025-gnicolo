@@ -1,0 +1,7 @@
+Il programma consiste nello sviluppo di un tool con un' interfaccia molto semplice su terminale. 
+Questo prende in input un file.txt contenente una lista dei libri presenti in negozio. 
+La lista viene caricata in input e corretta ove necessario.
+L'utente ha inoltre la possibilita di eseguire una ricerca basata su titolo o sull'autore, in base alle esigenze del caso digitando 1 o 2 su terminale in base alla scelta. 
+Possono essere catalogato un massimo di 1000 libri in un array di strutture "book" contenenti ognuna un ID, il titolo e l'autore del libro separati da virgole.
+
+Consultare  ".png" per maggiori informazioni sul flusso dei dati.

@@ -1,0 +1,87 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Contact_Manager.txt                                :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fzuccaro <fzuccaro@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/06/19 14:45:44 by fzuccaro          #+#    #+#              #
+#    Updated: 2025/06/19 14:59:20 by fzuccaro         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+\\\\\\\\\\\\\\\\\1 AVVIO E CARICAMENTO/////////////////
+
+
+    1- All’avvio, il programma riceve il nome del file CSV.
+
+    2- load_contacts_from_file(filename, &db):
+        
+        - Apre il file e legge riga per riga.
+        
+        - Ogni riga viene passata a create_contact_from_line(line, db), che:
+                
+                - Trimma i campi (nome, email, città, …).
+                - Valida ciascun campo tramite le funzioni:         
+                        
+                        validate_id(), 
+                        validate_name(), 
+                        validate_phone(), 
+                        validate_email(), 
+                        validate_city()
+                        
+                - Se valido, crea una t_contact allocata dinamicamente.
+        
+        - La nuova t_contact viene aggiunta a db.contacts[] con add_contact(&db, contact), che:
+                
+                - Inserisce in posizione db.count.
+                - Incrementa db.count.
+                - Aggiorna db.max_id se l’ID è superiore.
+        
+        - Se la riga è malformata o duplicata, viene ignorata con un warning, e si continua.
+
+    Risultato: db (di tipo t_contact_db) contiene tutti i contatti validi in memoria, con count e max_id corretti.
+
+
+////////////////////2 LOOP INTERATTIVO DEL MENU\\\\\\\\\\\\\\\\\\\\\\\
+
+
+All’interno della funzione contact_manager_menu(&db, filename), il programma si mette in un ciclo in cui:
+
+    1- List all (list_all_contacts(&db)): stampa tutti i contatti da db.contacts[0] a db.contacts[count-1].
+    
+    2- Search by name / city (search_contacts_by_name(&db, substr)):
+        
+        - Scorre db.contacts[], confrontando name o city con la sottostringa fornita, mostrando i match.
+    
+    3- Add:
+        
+        - Richiede dati all’utente (name, phone, email, city, address).
+        - Li valida o li ri-chiede fino a che non sono corretti.
+        - Assegna id = db.max_id + 1, aggiorna db.max_id.
+        - Crea e inserisce il nuovo contatto via add_contact(&db, new_contact).
+    
+    4- Update:
+        
+        - L’utente inserisce l’ID da modificare.
+        - Se esiste (find_contact_by_id()), richiede nuovi valori (oppure permettere di tenere quelli vecchi).
+        - Valida i nuovi campi e chiama update_contact(existing, &new_data).
+    
+    5- Delete:
+
+        - L’utente inserisce l’ID da eliminare.
+        - Se trovato (find_contact_by_id()), rimuove il contatto da db.contacts[], decrementa count, e libera la memoria.
+        
+//////////////////3. SALVATAGGIO E USCITA\\\\\\\\\\\\\\\\\\\ 
+
+Quando si sceglie “Save + Exit”:
+
+    1- save_contacts_to_file(filename, &db):
+        
+        - Crea un file temporaneo (es. filename.tmp).
+        - Itera db.contacts[0..count-1], scrivendo ogni contatto riga per riga in formato CSV.
+        - Dopo aver scritto con successo, chiude il file temporaneo.
+        - Rinomina filename.tmp in filename.
+        - Se c’è errore, il file originale resta intatto.
+
+    2- Il programma libera tutte le t_contact in db e termina.
