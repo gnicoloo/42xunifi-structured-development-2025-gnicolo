@@ -15,9 +15,6 @@
 
 bool	ft_check_file(char *filename)
 {
-	int i;
-
-	i = 0;
 	if (!filename)
 		return (false);
 	if (ft_strncmp(filename + (ft_strlen(filename) - 4), ".csv", 4) == 0)
